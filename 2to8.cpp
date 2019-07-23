@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
- 
+  
 
 #define maxsize 100 //最大size为100
 typedef char EleType; //这个地方要用typedef，不可以用define
