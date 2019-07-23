@@ -1,50 +1,50 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+ 
 
-
-#define maxsize 100 //×î´ósizeÎª100
-typedef char EleType; //Õâ¸öµØ·½ÒªÓÃtypedef£¬²»¿ÉÒÔÓÃdefine
-struct stack{		//stacksizeÊÇÕûĞÍ¡£
-	int stacksize;  //Ö¸µÄÊÇÕâ¸öÕ»µÄ×î´ósize
-	EleType* top;	//topÖ¸µÄÖ¸ÕëÊÇ×îºóÒ»Î»Êı¾İµÄºóÒ»¸ö
-	EleType* base;  //baseÖ¸µÄÖ¸ÕëÊÇ×îµÍÎ»µÄÖ¸Õë¡£
+#define maxsize 100 //æœ€å¤§sizeä¸º100
+typedef char EleType; //è¿™ä¸ªåœ°æ–¹è¦ç”¨typedefï¼Œä¸å¯ä»¥ç”¨define
+struct stack{		//stacksizeæ˜¯æ•´å‹ã€‚
+	int stacksize;  //æŒ‡çš„æ˜¯è¿™ä¸ªæ ˆçš„æœ€å¤§size
+	EleType* top;	//topæŒ‡çš„æŒ‡é’ˆæ˜¯æœ€åä¸€ä½æ•°æ®çš„åä¸€ä¸ª
+	EleType* base;  //baseæŒ‡çš„æŒ‡é’ˆæ˜¯æœ€ä½ä½çš„æŒ‡é’ˆã€‚
 };
 
 void init(struct stack* STA){
-	STA->base = (EleType *)malloc(maxsize * sizeof(EleType));	//ÎªbaseÉêÇëÄÚ´æ¿Õ¼ä¡£
-	if (!STA->base){											//Èç¹ûÃ»ÓĞÉêÇëÉÏ£¬ÔòÍÆ³ö
+	STA->base = (EleType *)malloc(maxsize * sizeof(EleType));	//ä¸ºbaseç”³è¯·å†…å­˜ç©ºé—´ã€‚
+	if (!STA->base){											//å¦‚æœæ²¡æœ‰ç”³è¯·ä¸Šï¼Œåˆ™æ¨å‡º
 		exit(1);
 	}
-	STA->stacksize = maxsize;	//¸ü¸ÄstacksizeµÄ´óĞ¡£»
-	STA->top = STA->base;		//³õÊ¼»¯µÄÊ±ºò¶¥¶ËÖ¸ÏòÎ²¶Ë
+	STA->stacksize = maxsize;	//æ›´æ”¹stacksizeçš„å¤§å°ï¼›
+	STA->top = STA->base;		//åˆå§‹åŒ–çš„æ—¶å€™é¡¶ç«¯æŒ‡å‘å°¾ç«¯
 }
 
-void insert(struct stack* STA, EleType e){	//²åÈëÊı¾İ
+void insert(struct stack* STA, EleType e){	//æ’å…¥æ•°æ®
 	int len;
 	EleType* m;
-	len = STA->top - STA->base;				//¼ÆËã×ÜÌå³¤¶È
-	if (len >= STA->stacksize){ //Èç¹û
+	len = STA->top - STA->base;				//è®¡ç®—æ€»ä½“é•¿åº¦
+	if (len >= STA->stacksize){ //å¦‚æœ
 
 		m = (EleType *)realloc(STA->base, (STA->stacksize + maxsize)*sizeof(EleType));
 		if (!m){
 			exit(1);
 		}
-		STA->stacksize = STA->stacksize + maxsize;//¸üĞÂstacksizeµÄÖµ
-		STA->base = m; //¸üĞÂbaseµÄÖµ
-		STA->top = m + len; //¸üĞÂtopµÄÖµ
+		STA->stacksize = STA->stacksize + maxsize;//æ›´æ–°stacksizeçš„å€¼
+		STA->base = m; //æ›´æ–°baseçš„å€¼
+		STA->top = m + len; //æ›´æ–°topçš„å€¼
 	}
-	*(STA->top) = e; //STA->topµÄÖµ¸üĞÂ£¬¸üĞÂºótop++
+	*(STA->top) = e; //STA->topçš„å€¼æ›´æ–°ï¼Œæ›´æ–°åtop++
 	(STA->top)++;
 }
 
 char pop(struct stack* STA){
 	char c;
 	if (STA->top == STA->base){
-		exit(1);	//·Ç·¨·ÃÎÊ£¬Òì³£ÍË³ö
+		exit(1);	//éæ³•è®¿é—®ï¼Œå¼‚å¸¸é€€å‡º
 	}
-	STA->top--;		//Ó¦µ±ÏÈ½«top--£¬ÔÙ½øĞĞÈ¡Öµ
-	c = *STA->top;	//topÎªÖ¸Õë
+	STA->top--;		//åº”å½“å…ˆå°†top--ï¼Œå†è¿›è¡Œå–å€¼
+	c = *STA->top;	//topä¸ºæŒ‡é’ˆ
 	return c;
 
 }
@@ -56,21 +56,21 @@ void count(struct stack* STA, struct stack* STA_8){
 	len = STA->top - STA->base;
 
 	for (int i = 0; i < len; i++){
-		c = pop(STA);	//È¡³öSTAÄÚµÄÖµ
-		if (c == '1')	//µ±c=='1'µÄÊ±ºò¼ÆËãnum
+		c = pop(STA);	//å–å‡ºSTAå†…çš„å€¼
+		if (c == '1')	//å½“c=='1'çš„æ—¶å€™è®¡ç®—num
 		{
 			num = num + (int)pow(2.0, i%3);
 		}
-		else if (c == '0'){	//µ±c=='0'µÄÊ±ºònum²»±ä
+		else if (c == '0'){	//å½“c=='0'çš„æ—¶å€™numä¸å˜
 			num = num;
 		}
-		else				//µ¯³öÄúÊäÈëµÄÊı¾İÓĞÎó£¬ÍË³ö
+		else				//å¼¹å‡ºæ‚¨è¾“å…¥çš„æ•°æ®æœ‰è¯¯ï¼Œé€€å‡º
 		{
-			printf("ÄúÊäÈëµÄÊı¾İÓĞÎó\n");
+			printf("æ‚¨è¾“å…¥çš„æ•°æ®æœ‰è¯¯\n");
 			return;
 		}
 		signal++;
-		if (signal == 3 || i == len-1){ //µ±ĞÅºÅÁ¿Îª3»òÕßµ½´ï½áÎ²µÄÊ±ºò£¬¼ÇÂ¼µ±Ê±µÄnumÖµ£¬Ñ¹Õ»£¬³õÊ¼»¯signalºÍnum
+		if (signal == 3 || i == len-1){ //å½“ä¿¡å·é‡ä¸º3æˆ–è€…åˆ°è¾¾ç»“å°¾çš„æ—¶å€™ï¼Œè®°å½•å½“æ—¶çš„numå€¼ï¼Œå‹æ ˆï¼Œåˆå§‹åŒ–signalå’Œnum
 			signal = 0;
 			insert(STA_8, (char)(num + 48));
 			num = 0;
@@ -81,7 +81,7 @@ void count(struct stack* STA, struct stack* STA_8){
 
 void getanswer(struct stack* STA_8){
 	char c;
-	while (STA_8->top != STA_8->base){	//ÅĞ¶ÏÊ±ºòÕ»¶¥µ½Õ»µ×£¬µ½´ïµÄ»°ÔòÍË³öÑ­»·
+	while (STA_8->top != STA_8->base){	//åˆ¤æ–­æ—¶å€™æ ˆé¡¶åˆ°æ ˆåº•ï¼Œåˆ°è¾¾çš„è¯åˆ™é€€å‡ºå¾ªç¯
 		STA_8->top--;
 		c = *STA_8->top;
 		printf("%c", c);
@@ -92,14 +92,14 @@ void getanswer(struct stack* STA_8){
 
 int main(void){
 
-	struct stack STA,STA_8; //Õâ¸öµØ·½²»ÄÜÖ±½Ó¶¨ÒåÖ¸Õë£¬Ö¸ÕëÒªÒªÖ¸Ïò¡£
+	struct stack STA,STA_8; //è¿™ä¸ªåœ°æ–¹ä¸èƒ½ç›´æ¥å®šä¹‰æŒ‡é’ˆï¼ŒæŒ‡é’ˆè¦è¦æŒ‡å‘ã€‚
 	EleType a;
 	
-	init(&STA); //Ê¹ÓÃµØÖ·
+	init(&STA); //ä½¿ç”¨åœ°å€
 	init(&STA_8);
 
-	printf("ÇëÊäÈëÒ»¶Î¶ş½øÖÆÊı£º");
-	scanf("%c", &a); //²»ÒªÊ¹ÓÃ×Ö·û´®£¬Ğ§¹û²»ºÃ¡£
+	printf("è¯·è¾“å…¥ä¸€æ®µäºŒè¿›åˆ¶æ•°ï¼š");
+	scanf("%c", &a); //ä¸è¦ä½¿ç”¨å­—ç¬¦ä¸²ï¼Œæ•ˆæœä¸å¥½ã€‚
 	while (a != '#'){
 		insert(&STA, a);
 		scanf("%c", &a);
