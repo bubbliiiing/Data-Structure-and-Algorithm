@@ -12,7 +12,7 @@ struct stack
 
 typedef struct stack* Stack;
 
-void init(Stack s){
+void init(Stack s){			//åˆå§‹åŒ–æ ˆ
 	Ele *p;
 	p = (Ele*)malloc(Maxsize * sizeof(Ele));
 	if (p == NULL){
@@ -23,23 +23,25 @@ void init(Stack s){
 	s->stacksize = Maxsize;
 }
 
-void PUSH(Stack s, Ele data){
+void PUSH(Stack s, Ele data){		//å…¥æ ˆ
 	int length;
 	length = s->top - s->bottom;
 	if (length >= s->stacksize){
 		s->bottom = (Ele*)realloc(s->bottom,(s->stacksize + Maxsize) * sizeof(Ele));
 		if (s->bottom == NULL){
-			printf("ÄÚ´æ·ÖÅäÊ§°Ü\n");
+			printf("å†…å­˜åˆ†é…å¤±è´¥\n");
 			exit(1);
 		}
+		s->stacksize = s->stacksize + Maxsize;//æ›´æ–°stacksizeçš„å€¼
+		s->top = s->bottom + length; //æ›´æ–°topçš„å€¼
 	}
 	*(s->top) = data;
 	s->top++;
 }
-Ele POP(Stack s){
+Ele POP(Stack s){					//å‡ºæ ˆ
 	Ele num;
 	if (s->top == s->bottom){
-		printf("Õ»ÄÚÃ»ÓĞÔªËØÁË£¡\n");
+		printf("æ ˆå†…æ²¡æœ‰å…ƒç´ äº†ï¼\n");
 		exit(1);
 	}
 	s->top--;
@@ -48,34 +50,34 @@ Ele POP(Stack s){
 }
 
 int main(){
-	struct stack s;			//¶¨ÒåÕ»
-	char c = 0,str[10];		//cÓÃÓÚ´Ó¼üÅÌ»ñÈ¡×Ö·û£¬strÓÃÓÚ´æ´¢Ã¿Ò»ÂÖÊäÈëµÄÊı×Ö£¬Ö®ºó»á×ª»¯³ÉdoubleÀàĞÍ
-	Ele a1, a2, num;		//a1£¬a2ÓÃÓÚÕ»µÄÔËËã
-	int i = 0;				//tempÁ¿
+	struct stack s;			//å®šä¹‰æ ˆ
+	char c = 0,str[10];		//cç”¨äºä»é”®ç›˜è·å–å­—ç¬¦ï¼Œstrç”¨äºå­˜å‚¨æ¯ä¸€è½®è¾“å…¥çš„æ•°å­—ï¼Œä¹‹åä¼šè½¬åŒ–æˆdoubleç±»å‹
+	Ele a1, a2, num;		//a1ï¼Œa2ç”¨äºæ ˆçš„è¿ç®—
+	int i = 0;				//tempé‡
 
 
-	init(&s);				//³õÊ¼»¯Õ»
-	printf("ÇëÊäÈëÒ»¸öËãÊ½£º");		
+	init(&s);				//åˆå§‹åŒ–æ ˆ
+	printf("è¯·è¾“å…¥ä¸€ä¸ªç®—å¼ï¼š");		
 
-	scanf("%c", &c);		//ÊäÈëÒ»¸ö×Ö·û
+	scanf("%c", &c);		//è¾“å…¥ä¸€ä¸ªå­—ç¬¦
 	while (c != '#')
 	{
-		while ((c <= '9' && c >= '1') || c == '.'){	//¸Ã²¿·ÖÓÃÓÚ»ñÈ¡Ò»¸ödoubleÀàĞÍµÄÊı×Ö
+		while ((c <= '9' && c >= '0') || c == '.'){	//è¯¥éƒ¨åˆ†ç”¨äºè·å–ä¸€ä¸ªdoubleç±»å‹çš„æ•°å­—
 			str[i++] = c;
 			str[i] = '\0';
 			if (i >= 10){
-				printf("ÊäÈëÊı¾İ¹ı´ó");
+				printf("è¾“å…¥æ•°æ®è¿‡å¤§");
 				exit(1);
 			}
 			scanf("%c", &c);
-			if (!(c <= '9' && c >= '1') && !(c == '.')){
-				a1 = atof(str);						//¸Ãº¯ÊıÓÃÓÚ½«×Ö·û´®×ª»¯Î»double
+			if (!(c <= '9' && c >= '0') && !(c == '.')){
+				a1 = atof(str);						//è¯¥å‡½æ•°ç”¨äºå°†å­—ç¬¦ä¸²è½¬åŒ–ä½double
 				PUSH(&s, a1);
 				i = 0;
 				break;
 			}
 		}
-		switch (c)								//ÅĞ¶ÏÊÇ·ñÊôÓÚ¼Ó¼õ³Ë³ı
+		switch (c)								//åˆ¤æ–­æ˜¯å¦å±äºåŠ å‡ä¹˜é™¤
 		{
 		case '+': 
 			a1 = POP(&s);
@@ -102,7 +104,7 @@ int main(){
 		case '#':
 			break;
 		default:
-			printf("ÊäÈë·ûºÅ´íÎó£¡\n");
+			printf("è¾“å…¥ç¬¦å·é”™è¯¯ï¼\n");
 			break;
 		}
 		scanf("%c", &c);
